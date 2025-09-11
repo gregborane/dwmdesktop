@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# update dwm config
+rm -rf $HOME/.config/dwmdesktop/dwm
+cp -r  $HOME/.config/dwm  $HOME/.config/dwmdesktop/dwm
+
+# update autostart
+rm -rf $HOME/.config/dwmdesktop/autostart.sh
+cp $HOME/.dwm/autostart.sh  $HOME/.config/dwmdesktop/
+
+# update autostart
+rm -rf $HOME/.config/dwmdesktop/Scripts
+cp -r $HOME/Scripts $HOME/.config/dwmdesktop/
