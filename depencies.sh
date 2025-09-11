@@ -33,7 +33,8 @@ if [ ! -d $HOME/.config/dwmdesktop]; then
 fi
 
 # Create Base Folders
-mkdir -p "$HOME/Downloads" "$HOME/Documents" "$HOME/Pictures" "$HOME/Music" "$HOME/Templates" "$HOME/App" "$HOME/Scripts"
+mkdir -p "$HOME/Downloads" "$HOME/Documents" "$HOME/Pictures" "$HOME/Music" "$HOME/Templates" "$HOME/App"
+cp -r $HOME/.config/dwmdesktop/Scripts $HOME/
 
 # Config Folders
 mkdir -p "$HOME/.fonts" "$HOME/.icons" "$HOME/.themes"
@@ -110,15 +111,21 @@ echo 'alias cd="z"' >> "$HOME/.bashrc"
 
 sudo tee /usr/bin/vim > /dev/null <<EOF
 #!/bin/bash
-nvim "$@"
+nvim '$@'
 EOF
 sudo chmod +x /usr/bin/vim
 
 sudo tee /usr/bin/gedit > /dev/null <<EOF
 #!/bin/bash
-gnome-text-editor "$@"
+gnome-text-editor '$@'
 EOF
 sudo chmod +x /usr/bin/gedit
+
+sudo tee /usr/bin/nano > /dev/null <<EOF
+#!/bin/bash
+nvim'$@'
+EOF
+sudo chmod +x /usr/bin/nano
 
 if [ -d $HOME/anaconda3 ]; then
 	$HOME/.config/dwmdesktop/python
