@@ -1,32 +1,11 @@
 #!/bin/bash
 
-# Dependencies for my System
-sudo pacman -S --noconfirm --needed alacritty aspell
-sudo pacman -S --noconfirm --needed base-devel bash-completion 
-sudo pacman -S --noconfirm --needed cmake curl 
-sudo pacman -S --noconfirm --needed dkms dotnet-runtime-8.0 dotnet-runtime-7.0 
-sudo pacman -S --noconfirm --needed feh ffmpeg flameshot fuse-common fzf 
-sudo pacman -S --noconfirm --needed gamescope gnome-text-editor gimp git gtk3 gtk4
-sudo pacman -S --noconfirm --needed hdf5 htop hspell
-sudo pacman -S --noconfirm --needed i3lock imagemagick
-sudo pacman -S --noconfirm --needed less libreoffice-fresh linux-lts linux-lts-docs linux-lts-headers libvoikko
-sudo pacman -S --noconfirm --needed mariadb
-sudo pacman -S --noconfirm --needed neovim ninja noto-fonts nuspell nwg-look
-sudo pacman -S --noconfirm --needed openssh
-sudo pacman -S --noconfirm --needed pavucontrol picom python-neovim
-sudo pacman -S --noconfirm --needed qt5 qt6 
-sudo pacman -S --noconfirm --needed r rofi
-sudo pacman -S --noconfirm --needed sddm steam
-sudo pacman -S --noconfirm --needed thunar thunderbird timeshift
-sudo pacman -S --noconfirm --needed unzip
-sudo pacman -S --noconfirm --needed vlc
-sudo pacman -S --noconfirm --needed wget
-sudo pacman -S --noconfirm --needed zip zoxide
-
 if [ ! -f ../dwmdesktop/depencies ];
 	echo "execute file in dwmdesktop folder"
 	exit 1
 fi
+
+$HOME/.config/dwmdesktop/pacpack.sh
 
 if [ ! -d $HOME/.config/dwmdesktop]; then
     cp -p ../dwmdesktop $HOME/.config
