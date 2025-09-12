@@ -13,7 +13,7 @@ sudo pacman -S --noconfirm --needed less libreoffice-fresh linux-lts linux-lts-d
 sudo pacman -S --noconfirm --needed mariadb
 sudo pacman -S --noconfirm --needed neovim ninja noto-fonts nuspell nwg-look
 sudo pacman -S --noconfirm --needed openssh
-sudo pacman -S --noconfirm --needed pavucontrol picom
+sudo pacman -S --noconfirm --needed pavucontrol picom python-neovim
 sudo pacman -S --noconfirm --needed qt5 qt6 
 sudo pacman -S --noconfirm --needed r rofi
 sudo pacman -S --noconfirm --needed sddm steam
@@ -128,5 +128,8 @@ EOF
 sudo chmod +x /usr/bin/nano
 
 if [ -d $HOME/anaconda3 ]; then
-	$HOME/.config/dwmdesktop/python
+	$HOME/Scripts/python/conda
+	$HOME/Scripts/python/python
 fi
+
+cp -r $HOME/.config/dwmdesktop/nvim $HOME/.config
