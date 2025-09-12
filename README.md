@@ -45,7 +45,6 @@ install zoxide for bash and modify cd with zoxide.
 TO ADD : 
 .bashrc file 
 set up $PATH
-NVIM configuration 
 
 
 
