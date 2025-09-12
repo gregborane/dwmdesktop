@@ -42,6 +42,17 @@ nvim into vim
 gnome-text-editor into gedit
 install zoxide for bash and modify cd with zoxide.
 
+## Neovim 
+
+Setup some plugins and keymaps for neovim 
+plugins : 
+
+- tokyonight theme
+- LSP and formatting
+- python notebooks editing, rendering and executing
+- neotree
+- bufferline
+
 TO ADD : 
 .bashrc file 
 set up $PATH
