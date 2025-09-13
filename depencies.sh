@@ -58,6 +58,7 @@ cp -r "$HOME/.config/dwmdesktop/omp" "$HOME/.config"
 cp -r "$HOME/.config/dwmdesktop/dwm" "$HOME/.config/"
 cd "$HOME/.config/dwm" || exit
 sudo make clean install
+alacritty migrate 
 
 # Enable StartUp Display Manager
 sudo systemctl enable sddm
