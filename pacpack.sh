@@ -3,20 +3,21 @@
 # Dependencies for my System
 
 sudo pacman -S --noconfirm --needed alacritty alsa-plugins aspell
-sudo pacman -S --noconfirm --needed base-devel bash-completion
-sudo pacman -S --noconfirm --needed cmake curl
+sudo pacman -S --noconfirm --needed base-devel bash-completion biber
+sudo pacman -S --noconfirm --needed cmake composer curl
 sudo pacman -S --noconfirm --needed dkms dotnet-runtime-7.0 dotnet-runtime-8.0
 sudo pacman -S --noconfirm --needed feh ffmpeg flameshot fuse-common fzf
 sudo pacman -S --noconfirm --needed gamescope gimp giflip gnome-text-editor ghostscript git gtk3 gtk4
 sudo pacman -S --noconfirm --needed hdf5 hspell htop
 sudo pacman -S --noconfirm --needed i3lock imagemagick
-sudo pacman -S --noconfirm --needed less libreoffice-fresh linux-lts linux-lts-docs linux-lts-headers lutris
+sudo pacman -S --noconfirm --needed jdk-openjdk julia
+sudo pacman -S --noconfirm --needed less libreoffice-fresh linux-lts linux-lts-docs linux-lts-headers luarocks lutris
 sudo pacman -S --noconfirm --needed mariadb mermaid-cli
 sudo pacman -S --noconfirm --needed ncurse neovim ninja noto-fonts nuspell nwg-look
 sudo pacman -S --noconfirm --needed openal openssh
-sudo pacman -S --noconfirm --needed pavucontrol picom python-neovim
+sudo pacman -S --noconfirm --needed pavucontrol php picom python-neovim
 sudo pacman -S --noconfirm --needed qt5 qt6
-sudo pacman -S --noconfirm --needed r ripgrep rofi
+sudo pacman -S --noconfirm --needed r ripgrep rofi ruby
 sudo pacman -S --noconfirm --needed sddm sqlite sshfs steam
 sudo pacman -S --noconfirm --needed tectonic texlive thunar timeshift tree-sitter-cli thunderbird
 sudo pacman -S --noconfirm --needed unzip vlc vulkan-icd-loader
