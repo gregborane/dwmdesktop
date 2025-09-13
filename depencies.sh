@@ -1,55 +1,65 @@
 #!/bin/bash
 
-if [ ! -f ../dwmdesktop/depencies ];
-	echo "execute file in dwmdesktop folder"
-	exit 1
+# Check dependency file
+if [ ! -f ../dwmdesktop/depencies ]; then
+    echo "execute file in dwmdesktop folder"
+    exit 1
 fi
 
+# Install some packages
 $HOME/.config/dwmdesktop/pacpack.sh
 
-if [ ! -d $HOME/.config/dwmdesktop]; then
-    cp -p ../dwmdesktop $HOME/.config
+# Install oh-my-posh
+curl -s https://ohmyposh.dev/install.sh | bash -s
+
+# Copy dwmdesktop config if missing
+if [ ! -d "$HOME/.config/dwmdesktop" ]; then
+    cp -r ../dwmdesktop "$HOME/.config"
 fi
 
 # Create Base Folders
 mkdir -p "$HOME/Downloads" "$HOME/Documents" "$HOME/Pictures" "$HOME/Music" "$HOME/Templates" "$HOME/App"
-cp -r $HOME/.config/dwmdesktop/Scripts $HOME/
+cp -r "$HOME/.config/dwmdesktop/Scripts" "$HOME/"
 
 # Config Folders
 mkdir -p "$HOME/.fonts" "$HOME/.icons" "$HOME/.themes"
 
 # Download and Install a Nerd Font
-cd "$HOME/.fonts"
+cd "$HOME/.fonts" || exit
 wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraMono.zip
 unzip FiraMono.zip
 rm FiraMono.zip
 
 # Download and Install Icons and Cursors
-cd "$HOME/.icons"
+cd "$HOME/.icons" || exit
 cp -r "$HOME/.config/dwmdesktop/Bibata-Modern-Classic" .
 git clone https://github.com/zayronxio/Zafiro-icons.git
-cd Zafiro-icons
+cd Zafiro-icons || exit
 mv Dark ../
 cd ..
 rm -rf Zafiro-icons
 
 # Download and Install a GTK theme
-cd "$HOME/.themes"
+cd "$HOME/.themes" || exit
 git clone https://github.com/EliverLara/Nordic.git
 
 fc-cache
 
-# DWM SET UP
+# Config setup
 mkdir -p "$HOME/.dwm"
 cp "$HOME/.config/dwmdesktop/autostart.sh" "$HOME/.dwm/"
 cp "$HOME/.config/dwmdesktop/wallpaper.png" "$HOME/.config/"
 cp "$HOME/.config/dwmdesktop/lock.png" "$HOME/.config/"
+cp "$HOME/.config/dwmdesktop/.tmux.conf" "$HOME/.config"
 cp -r "$HOME/.config/dwmdesktop/rofi" "$HOME/.config/"
+cp -r "$HOME/.config/dwmdesktop/nvim" "$HOME/.config"
+cp -r "$HOME/.config/dwmdesktop/alacritty" "$HOME/.config"
+cp -r "$HOME/.config/dwmdesktop/omp" "$HOME/.config"
 cp -r "$HOME/.config/dwmdesktop/dwm" "$HOME/.config/"
-cd "$HOME/.config/dwm"
+cd "$HOME/.config/dwm" || exit
 sudo make clean install
 
-# Create StartUp Display Manager
+# Enable StartUp Display Manager
 sudo systemctl enable sddm
 
 # Configure StartX
@@ -74,41 +84,88 @@ EOF
 
 # Set up AUR helper
 git clone https://aur.archlinux.org/yay.git
-cd yay
+cd yay || exit
 makepkg -si --noconfirm
 
 # Install zoxide
 zoxide init bash >> "$HOME/.bash_zoxide"
 
 cat <<'EOF' >> "$HOME/.bashrc"
-if [ -f $HOME/.bash_zoxide ]; then
-    . $HOME/.bash_zoxide
+
+if [ -f "$HOME/.bash_zoxide" ]; then
+    . "$HOME/.bash_zoxide"
 fi
+
+if [ -f "$HOME/.bash_aliases" ]; then
+    . "$HOME/.bash_aliases"
+fi
+
+# Path Variables
+export TERM='xterm-256color'
+export EDITOR='nvim'
+export VISUAL='nvim'
+
+tmux >> /dev/null
+ssh-agent -s >> /dev/null
+
+eval $(oh-my-posh init bash --config /home/greg/.config/omp/theme.json)
 EOF
 
-echo 'alias cd="z"' >> "$HOME/.bashrc"
-
-sudo tee /usr/bin/vim > /dev/null <<EOF
+# aliases
+cat >> "$HOME/.bash_aliases" <<'EOF'
 #!/bin/bash
-nvim '$@'
+
+# ls
+alias ls="ls --color=auto"
+alias ll="ls -lFA"
+alias la='ls -a'
+alias l='ls -CF'
+alias lsd='ls -d */'
+alias lh='ls -lh'
+alias lsr='ls -R'
+
+# tree
+alias lt="tree -C ."
+
+# grep
+alias grep="grep --color=auto"
+
+# cd
+alias cd="z"
+
+# sudo
+alias sudo="sudo -E"
+EOF
+
+# profile PATH setup
+cat >> "$HOME/.bash_profile" <<'EOF'
+if [ -d "$HOME/.local/bin" ]; then
+    PATH=$PATH:$HOME/.local/bin
+fi
+
+if [ -d "$HOME/Scripts" ]; then
+    PATH=$PATH:$HOME/Scripts
+fi
+
+export PATH
+EOF
+
+# Create command wrappers
+sudo tee /usr/bin/vim > /dev/null <<'EOF'
+#!/bin/bash
+nvim "$@"
 EOF
 sudo chmod +x /usr/bin/vim
 
-sudo tee /usr/bin/gedit > /dev/null <<EOF
+sudo tee /usr/bin/gedit > /dev/null <<'EOF'
 #!/bin/bash
-gnome-text-editor '$@'
+gnome-text-editor "$@"
 EOF
 sudo chmod +x /usr/bin/gedit
 
-sudo tee /usr/bin/nano > /dev/null <<EOF
+sudo tee /usr/bin/nano > /dev/null <<'EOF'
 #!/bin/bash
-nvim'$@'
+nvim "$@"
 EOF
 sudo chmod +x /usr/bin/nano
 
-if [ -d $HOME/anaconda3 ]; then
-	$HOME/Scripts/python/conda
-	$HOME/Scripts/python/python
-fi
-
-cp -r $HOME/.config/dwmdesktop/nvim $HOME/.config

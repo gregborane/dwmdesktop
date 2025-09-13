@@ -96,19 +96,19 @@ static const char *termcmd[]   = { "alacritty", NULL };
 static const char *rofi[]      = {"rofi", "-show", "drun", NULL };
 static const char *i3lock[]    = {"i3lock", "-i", "/home/greg/.config/lock.png", NULL };
 static const char *flameshot[] = {"flameshot", "gui", NULL};
+static const char *brightness[] = {"/home/greg/Scripts/brightness", NULL};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ MODKEY|ShiftMask,		XK_b,			    spawn, 	    {.v = brightness }},
 	{ MODKEY,                       XK_c,                       spawn,          {.v = rofi } },
 	{ MODKEY,                       XK_t,                       spawn,          {.v = termcmd } },
 	{ MODKEY,			XK_l,                       spawn,          {.v = i3lock } },
 	{ MODKEY,                       XK_b,                       togglebar,      {0} },
-	{ MODKEY,                       XK_j,                       focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,                       focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,                       incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,                       incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,                       setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,                       setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_Left,                    setmfact,       {.f = -0.05} },
+	{ MODKEY|ShiftMask,             XK_Right,                   setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Left,                    focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_Right,                   focusstack,     {.i = -1 } },
 	{ 0,				XK_Print, 		    spawn,	    {.v = flameshot } },

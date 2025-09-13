@@ -47,15 +47,14 @@ install zoxide for bash and modify cd with zoxide.
 Setup some plugins and keymaps for neovim 
 plugins : 
 
-- tokyonight theme
+- Tokyonight theme
 - LSP and formatting
-- python notebooks editing, rendering and executing
-- neotree
-- bufferline
+- Python notebooks editing, rendering and executing
+- Neotree
+- Bufferline
+- SSH
+- Related Dependencies associated to main plug-ins
 
-TO ADD : 
-.bashrc file 
-set up $PATH
 
 
 
