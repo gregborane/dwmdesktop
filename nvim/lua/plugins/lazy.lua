@@ -249,19 +249,22 @@ require("lazy").setup({
 		{ "3rd/image.nvim" },
 	},
 
-	--treesitter
+	-- ssh
+	{
+		"nosduco/remote-sshfs.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+		opts = {
+			-- Refer to the configuration section below
+			-- or leave empty for defaults
+		},
+	},
+	-- nvim-treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
-		version = false, -- last release is way too old and doesn't work on Windows
 		build = ":TSUpdate",
-		event = { "LazyFile", "VeryLazy" },
-		lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+		event = "VeryLazy",
+		lazy = vim.fn.argc(-1) == 0,
 		init = function(plugin)
-			-- PERF: add nvim-treesitter queries to the rtp and it's custom query predicates early
-			-- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
-			-- no longer trigger the **nvim-treesitter** module to be loaded in time.
-			-- Luckily, the only things that those plugins need are the custom queries, which we make available
-			-- during startup.
 			require("lazy.core.loader").add_to_rtp(plugin)
 			require("nvim-treesitter.query_predicates")
 		end,
@@ -270,16 +273,15 @@ require("lazy").setup({
 			{ "<c-space>", desc = "Increment Selection" },
 			{ "<bs>", desc = "Decrement Selection", mode = "x" },
 		},
-		opts_extend = { "ensure_installed" },
-		---@type TSConfig
-		---@diagnostic disable-next-line: missing-fields
 		opts = {
 			highlight = { enable = true },
 			indent = { enable = true },
 			ensure_installed = {
 				"bash",
 				"c",
+				"css",
 				"diff",
+				"latex",
 				"html",
 				"javascript",
 				"jsdoc",
@@ -290,15 +292,20 @@ require("lazy").setup({
 				"luap",
 				"markdown",
 				"markdown_inline",
+				"norg",
 				"printf",
 				"python",
 				"query",
 				"regex",
+				"scss",
+				"svelte",
 				"toml",
 				"tsx",
 				"typescript",
+				"typst",
 				"vim",
 				"vimdoc",
+				"vue",
 				"xml",
 				"yaml",
 			},
@@ -333,51 +340,40 @@ require("lazy").setup({
 				},
 			},
 		},
-		---@param opts TSConfig
 		config = function(_, opts)
-			if type(opts.ensure_installed) == "table" then
-				opts.ensure_installed = LazyVim.dedup(opts.ensure_installed)
+			local function dedup(tbl)
+				local seen = {}
+				local res = {}
+				for _, v in ipairs(tbl) do
+					if not seen[v] then
+						table.insert(res, v)
+						seen[v] = true
+					end
+				end
+				return res
 			end
+
+			if type(opts.ensure_installed) == "table" then
+				opts.ensure_installed = dedup(opts.ensure_installed)
+			end
+
 			require("nvim-treesitter.configs").setup(opts)
 		end,
 	},
 
-	--lazy dev
-	{
-		"folke/lazydev.nvim",
-		ft = "lua",
-		cmd = "LazyDev",
-		opts = {
-			library = {
-				{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
-				{ path = "LazyVim", words = { "LazyVim" } },
-				{ path = "snacks.nvim", words = { "Snacks" } },
-				{ path = "lazy.nvim", words = { "LazyVim" } },
-			},
-		},
-	},
-
-	-- tree text objects
+	-- nvim-treesitter-textobjects
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		event = "VeryLazy",
 		enabled = true,
 		config = function()
-			-- If treesitter is already loaded, we need to run config again for textobjects
-			if LazyVim.is_loaded("nvim-treesitter") then
-				local opts = LazyVim.opts("nvim-treesitter")
-				require("nvim-treesitter.configs").setup({ textobjects = opts.textobjects })
-			end
-
-			-- When in diff mode, we want to use the default
-			-- vim text objects c & C instead of the treesitter ones.
-			local move = require("nvim-treesitter.textobjects.move") ---@type table<string,fun(...)>
+			local move = require("nvim-treesitter.textobjects.move")
 			local configs = require("nvim-treesitter.configs")
 			for name, fn in pairs(move) do
 				if name:find("goto") == 1 then
 					move[name] = function(q, ...)
 						if vim.wo.diff then
-							local config = configs.get_module("textobjects.move")[name] ---@type table<string,string>
+							local config = configs.get_module("textobjects.move")[name]
 							for key, query in pairs(config or {}) do
 								if q == query and key:find("[%]%[][cC]") then
 									vim.cmd("normal! " .. key)
@@ -392,136 +388,18 @@ require("lazy").setup({
 		end,
 	},
 
-	--lua line
+	-- latex
 	{
-		"nvim-lualine/lualine.nvim",
-		event = "VeryLazy",
+		"lervag/vimtex",
+		lazy = false, -- we don't want to lazy load VimTeX
+		-- tag = "v2.15", -- uncomment to pin to a specific release
 		init = function()
-			vim.g.lualine_laststatus = vim.o.laststatus
-			if vim.fn.argc(-1) > 0 then
-				-- set an empty statusline till lualine loads
-				vim.o.statusline = " "
-			else
-				-- hide the statusline on the starter page
-				vim.o.laststatus = 0
-			end
-		end,
-		opts = function()
-			-- PERF: we don't need this lualine require madness 🤷
-			local lualine_require = require("lualine_require")
-			lualine_require.require = require
-
-			local icons = LazyVim.config.icons
-
-			vim.o.laststatus = vim.g.lualine_laststatus
-
-			local opts = {
-				options = {
-					theme = "auto",
-					globalstatus = vim.o.laststatus == 3,
-					disabled_filetypes = { statusline = { "dashboard", "alpha", "ministarter", "snacks_dashboard" } },
-				},
-				sections = {
-					lualine_a = { "mode" },
-					lualine_b = { "branch" },
-
-					lualine_c = {
-						LazyVim.lualine.root_dir(),
-						{
-							"diagnostics",
-							symbols = {
-								error = icons.diagnostics.Error,
-								warn = icons.diagnostics.Warn,
-								info = icons.diagnostics.Info,
-								hint = icons.diagnostics.Hint,
-							},
-						},
-						{ "filetype", icon_only = true, separator = "", padding = { left = 1, right = 0 } },
-						{ LazyVim.lualine.pretty_path() },
-					},
-					lualine_x = {
-						Snacks.profiler.status(),
-          -- stylua: ignore
-          {
-            function() return require("noice").api.status.command.get() end,
-            cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
-            color = function() return { fg = Snacks.util.color("Statement") } end,
-          },
-          -- stylua: ignore
-          {
-            function() return require("noice").api.status.mode.get() end,
-            cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
-            color = function() return { fg = Snacks.util.color("Constant") } end,
-          },
-          -- stylua: ignore
-          {
-            function() return "  " .. require("dap").status() end,
-            cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-            color = function() return { fg = Snacks.util.color("Debug") } end,
-          },
-          -- stylua: ignore
-          {
-            require("lazy.status").updates,
-            cond = require("lazy.status").has_updates,
-            color = function() return { fg = Snacks.util.color("Special") } end,
-          },
-						{
-							"diff",
-							symbols = {
-								added = icons.git.added,
-								modified = icons.git.modified,
-								removed = icons.git.removed,
-							},
-							source = function()
-								local gitsigns = vim.b.gitsigns_status_dict
-								if gitsigns then
-									return {
-										added = gitsigns.added,
-										modified = gitsigns.changed,
-										removed = gitsigns.removed,
-									}
-								end
-							end,
-						},
-					},
-					lualine_y = {
-						{ "progress", separator = " ", padding = { left = 1, right = 0 } },
-						{ "location", padding = { left = 0, right = 1 } },
-					},
-					lualine_z = {
-						function()
-							return " " .. os.date("%R")
-						end,
-					},
-				},
-				extensions = { "neo-tree", "lazy", "fzf" },
-			}
-
-			-- do not add trouble symbols if aerial is enabled
-			-- And allow it to be overriden for some buffer types (see autocmds)
-			if vim.g.trouble_lualine and LazyVim.has("trouble.nvim") then
-				local trouble = require("trouble")
-				local symbols = trouble.statusline({
-					mode = "symbols",
-					groups = {},
-					title = false,
-					filter = { range = true },
-					format = "{kind_icon}{symbol.name:Normal}",
-					hl_group = "lualine_c_normal",
-				})
-				table.insert(opts.sections.lualine_c, {
-					symbols and symbols.get,
-					cond = function()
-						return vim.b.trouble_lualine ~= false and symbols.has()
-					end,
-				})
-			end
-
-			return opts
+			-- VimTeX configuration goes here, e.g.
+			vim.g.vimtex_view_method = "zathura"
 		end,
 	},
 
-	-- noice
+	-- better ui
 	{
 		"folke/noice.nvim",
 		event = "VeryLazy",
@@ -552,18 +430,77 @@ require("lazy").setup({
 				long_message_to_split = true,
 			},
 		},
-  -- stylua: ignore
-  keys = {
-    { "<leader>sn", "", desc = "+noice"},
-    { "<S-Enter>", function() require("noice").redirect(vim.fn.getcmdline()) end, mode = "c", desc = "Redirect Cmdline" },
-    { "<leader>snl", function() require("noice").cmd("last") end, desc = "Noice Last Message" },
-    { "<leader>snh", function() require("noice").cmd("history") end, desc = "Noice History" },
-    { "<leader>sna", function() require("noice").cmd("all") end, desc = "Noice All" },
-    { "<leader>snd", function() require("noice").cmd("dismiss") end, desc = "Dismiss All" },
-    { "<leader>snt", function() require("noice").cmd("pick") end, desc = "Noice Picker (Telescope/FzfLua)" },
-    { "<c-f>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, silent = true, expr = true, desc = "Scroll Forward", mode = {"i", "n", "s"} },
-    { "<c-b>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true, expr = true, desc = "Scroll Backward", mode = {"i", "n", "s"}},
-  },
+
+		keys = {
+			{ "<leader>sn", "", desc = "+noice" },
+			{
+				"<S-Enter>",
+				function()
+					require("noice").redirect(vim.fn.getcmdline())
+				end,
+				mode = "c",
+				desc = "Redirect Cmdline",
+			},
+			{
+				"<leader>snl",
+				function()
+					require("noice").cmd("last")
+				end,
+				desc = "Noice Last Message",
+			},
+			{
+				"<leader>snh",
+				function()
+					require("noice").cmd("history")
+				end,
+				desc = "Noice History",
+			},
+			{
+				"<leader>sna",
+				function()
+					require("noice").cmd("all")
+				end,
+				desc = "Noice All",
+			},
+			{
+				"<leader>snd",
+				function()
+					require("noice").cmd("dismiss")
+				end,
+				desc = "Dismiss All",
+			},
+			{
+				"<leader>snt",
+				function()
+					require("noice").cmd("pick")
+				end,
+				desc = "Noice Picker (Telescope/FzfLua)",
+			},
+			{
+				"<c-f>",
+				function()
+					if not require("noice.lsp").scroll(4) then
+						return "<c-f>"
+					end
+				end,
+				silent = true,
+				expr = true,
+				desc = "Scroll Forward",
+				mode = { "i", "n", "s" },
+			},
+			{
+				"<c-b>",
+				function()
+					if not require("noice.lsp").scroll(-4) then
+						return "<c-b>"
+					end
+				end,
+				silent = true,
+				expr = true,
+				desc = "Scroll Backward",
+				mode = { "i", "n", "s" },
+			},
+		},
 		config = function(_, opts)
 			-- HACK: noice shows messages from before it was enabled,
 			-- but this is not ideal when Lazy is installing plugins,
@@ -575,27 +512,34 @@ require("lazy").setup({
 		end,
 	},
 
-	-- ui
-	{ "MunifTanjim/nui.nvim", lazy = true },
-
 	-- snacks
+
 	{
-		"snacks.nvim",
+		"folke/snacks.nvim",
 		opts = {
+			bigfile = { enabled = true },
+			explorer = { enabled = true },
+			indent = { enabled = true },
+			input = { enabled = true },
+			picker = { enabled = true },
+			notifier = { enabled = true },
+			quickfile = { enabled = true },
+			scope = { enabled = true },
+			scroll = { enabled = true },
+			statuscolumn = { enabled = true },
+			words = { enabled = true },
 			dashboard = {
 				preset = {
 					pick = function(cmd, opts)
 						return LazyVim.pick(cmd, opts)()
 					end,
 					header = [[
-              
-  					   ██══╗   ██╗    ██╗    ██╗
-      				             ██║ ██══╝    ██║    ██║
-	 				       ██══╗      ██║    ██║
-       			           	     ██║ ██╚═╗    ██║    ██║
-    					   ██╔═╝   ██║    ██║    ██║
-                                           ╚═╝     ╚═╝    ╚═╝    ╚═╝
-      ]],
+██   ██╗██╗██╗
+╚██ ██╔╝██║██║
+ ╚███═╝ ██║██║
+ ██╔██╗ ██║██║
+██╔╝ ██╗██║██║
+╚═╝  ╚═╝╚═╝╚═╝]],
         -- stylua: ignore
         ---@type snacks.dashboard.Item[]
         keys = {
@@ -605,12 +549,35 @@ require("lazy").setup({
           { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
           { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
           { icon = " ", key = "s", desc = "Restore Session", section = "session" },
-          { icon = " ", key = "x", desc = "Lazy Extras", action = ":LazyExtras" },
           { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
           { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+	  { icon = "",   key = "h", desc = "Health", action = ":checkhealth" },
         },
 				},
 			},
 		},
 	},
+
+	--lazygit
+	{
+		"kdheepak/lazygit.nvim",
+		lazy = true,
+		cmd = {
+			"LazyGit",
+			"LazyGitConfig",
+			"LazyGitCurrentFile",
+			"LazyGitFilter",
+			"LazyGitFilterCurrentFile",
+		},
+		-- optional for floating window border decoration
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		-- setting the keybinding for LazyGit with 'keys' is recommended in
+		-- order to load the plugin when the command is run for the first time
+		keys = {
+			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+		},
+	},
+
 })

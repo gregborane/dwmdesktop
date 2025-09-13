@@ -23,3 +23,8 @@ cp -r $HOME/.tmux.conf $HOME/.config/dwmdesktop
 # update oh my posh
 rm -rf $HOME/.config/dwmdesktop/omp
 cp -r $HOME/.config/omp $HOME/.config/dwmdesktop/omp
+
+# update neovim
+rm -rf $HOME/.config/dwmdesktop/nvim
+cp -r $HOME/.config/nvim $HOME/.config/dwmdesktop/nvim
+
