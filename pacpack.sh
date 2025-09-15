@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo pacman -Syu
+
 # Dependencies for my System
 
 sudo pacman -S --noconfirm --needed alacritty alsa-plugins aspell
@@ -20,7 +22,8 @@ sudo pacman -S --noconfirm --needed qt5 qt6
 sudo pacman -S --noconfirm --needed r ripgrep rofi ruby
 sudo pacman -S --noconfirm --needed sddm sqlite sshfs steam
 sudo pacman -S --noconfirm --needed tectonic texlive thunar timeshift tree-sitter-cli thunderbird
-sudo pacman -S --noconfirm --needed unzip vlc vulkan-icd-loader
+sudo pacman -S --noconfirm --needed ueberzug unzip 
+sudo pacman -S --noconfirm --needed vlc vulkan-icd-loader
 sudo pacman -S --noconfirm --needed wget wine-staging zathura zip zoxide
 
 # lib* packages (alphabetically sorted)

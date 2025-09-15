@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Check dependency file
-if [ ! -f ../dwmdesktop/depencies ]; then
-    echo "execute file in dwmdesktop folder"
-    exit 1
-fi
-
 # Install some packages
 $HOME/.config/dwmdesktop/pacpack.sh
 
@@ -50,7 +44,7 @@ mkdir -p "$HOME/.dwm"
 cp "$HOME/.config/dwmdesktop/autostart.sh" "$HOME/.dwm/"
 cp "$HOME/.config/dwmdesktop/wallpaper.png" "$HOME/.config/"
 cp "$HOME/.config/dwmdesktop/lock.png" "$HOME/.config/"
-cp "$HOME/.config/dwmdesktop/.tmux.conf" "$HOME/.config"
+cp "$HOME/.config/dwmdesktop/.tmux.conf" "$HOME"
 cp -r "$HOME/.config/dwmdesktop/rofi" "$HOME/.config/"
 cp -r "$HOME/.config/dwmdesktop/nvim" "$HOME/.config"
 cp -r "$HOME/.config/dwmdesktop/alacritty" "$HOME/.config"
@@ -107,7 +101,7 @@ export EDITOR='nvim'
 export VISUAL='nvim'
 
 tmux >> /dev/null
-ssh-agent -s >> /dev/null
+eval $(ssh-agent -s) >> /dev/null
 
 eval $(oh-my-posh init bash --config /home/greg/.config/omp/theme.json)
 EOF
