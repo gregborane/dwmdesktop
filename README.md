@@ -1,6 +1,6 @@
 # My X11 config using DWM based on Arch
 
-## EXECUTE DEPENCIES.SH for set up inside the dwmdesktop folder !
+## EXECUTE DEPENCIES.SH for set up.
 
 Refer to folder for their relative information.
 
@@ -33,3 +33,10 @@ Are installed using depconf.sh
 ### Aliases, Wrapper 
 
 Are created with newnick.sh
+
+SHOULD ADD :
+
+error handling,
+more precise readme 
+package source 
+log
