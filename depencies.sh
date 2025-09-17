@@ -78,6 +78,7 @@ Type=Application
 EOF
 
 # Set up AUR helper
+cd $HOME
 git clone https://aur.archlinux.org/yay.git
 cd yay || exit
 makepkg -si --noconfirm
