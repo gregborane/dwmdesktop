@@ -1,60 +1,35 @@
 # My X11 config using DWM based on Arch
 
-## EXECUTE DEPENCIES.SH for set up.
+## EXECUTE DEPENCIES.SH for set up inside the dwmdesktop folder !
 
-## Windows Manager : DWM 
-Contains 3 patches :
-- Autostart
-- Better Full Gaps, BarPadding is an old patch which is currently not used
-- Systray notifications (soon)
-- Fullscreen
+Refer to folder for their relative information.
 
-Use my custom wallpaper for i3lock and feh background, feel free to use them if you want.
+## Depencies.sh
 
-### Icons, Fonts, Themes
-Create default folder : Documents, Music, Downloads, Pictures, Templates and App.
-Create config folder: $HOME/.fonts, .icons and .themes.
-in which are put a FireMonoNerdFont, BibataModernClassic, Zafiro icons and Nordic themes in their $HOME respective folders.
-Move my daily Scripts/ to $HOME as well.
+Execute to deploy the overall config in the system, it will : 
 
-### Menu : Rofi
+- Install pacman packages
+- Install yay 
+- Create general folders and .folders
+- Put my different configs throughout .config, .fonts, .icons, .themes folders
+- Add some Scripts I did
+- Put Scripts and .local/bin in the PATH
+- replace cd by z
+- add some aliases and wrapper
 
-I do not use default theme, that's why you can find rofi configuration folder.
+### Pacman packages 
 
-## Init and log in : SDDM (soon) 
+Are installed through pacpack.sh.
+They are listed in alphabetical order
 
-Easy set up using "astraunaut theme sddm" from github. I like japenese aesthetic so I put it.
-Creating DWM entrie for log in as well.
+### Config 
 
-## Packages 
+Is deployed using depconf.sh
 
-List in alphabetical orders which can be found in depencies.sh.
-I use Yay so it is installed as well.
+### Scripts 
 
-## Python set up
+Are installed using depconf.sh
 
-Packages are installed in an anaconda environment and it is a requirement for the installation. 
-If no $HOME/anaconda3 is found this is skipped.
+### Aliases, Wrapper 
 
-## Creates some aliases 
-
-nvim into vim
-gnome-text-editor into gedit
-install zoxide for bash and modify cd with zoxide.
-
-## Neovim 
-
-Setup some plugins and keymaps for neovim 
-plugins : 
-
-- Tokyonight theme
-- LSP and formatting
-- Python notebooks editing, rendering and executing
-- Neotree
-- Bufferline
-- SSH
-- Related Dependencies associated to main plug-ins
-
-
-
-
+Are created with newnick.sh
