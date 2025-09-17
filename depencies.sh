@@ -26,7 +26,7 @@ rm FiraMono.zip
 
 # Download and Install Icons and Cursors
 cd "$HOME/.icons" || exit
-cp -r "$HOME/.config/dwmdesktop/Bibata-Modern-Classic" .
+cp -r "$HOME/.config/dwmdesktop/Bibata-Modern-Ice" .
 git clone https://github.com/zayronxio/Zafiro-icons.git
 cd Zafiro-icons || exit
 mv Dark ../
