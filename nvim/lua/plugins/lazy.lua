@@ -551,7 +551,7 @@ require("lazy").setup({
           { icon = " ", key = "s", desc = "Restore Session", section = "session" },
           { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
           { icon = " ", key = "q", desc = "Quit", action = ":qa" },
-	  { icon = "",   key = "h", desc = "Health", action = ":checkhealth" },
+	  { icon = " ", key = "h", desc = "Health", action = ":checkhealth" },
         },
 				},
 			},
