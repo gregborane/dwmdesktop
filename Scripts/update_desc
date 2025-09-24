@@ -32,3 +32,7 @@ cp -r $HOME/.config/nvim $HOME/.config/dwmdesktop/nvim
 rm -rf $HOME/.config/dwmdesktop/fontconfig
 cp -r $HOME/.config/fontconfig $HOME/.config/dwmdesktop/fontconfig
 
+# update picom conf
+
+rm -rf $HOME/.config/dwmdesktop/picom
+cp -r $HOME/.config/picom $HOME/.config/dwmdesktop/picom

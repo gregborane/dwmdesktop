@@ -24,7 +24,7 @@ sudo pacman -S --noconfirm --needed qt5 qt6
 sudo pacman -S --noconfirm --needed r ripgrep rofi ruby
 sudo pacman -S --noconfirm --needed sddm sqlite sshfs steam
 sudo pacman -S --noconfirm --needed tectonic texlive thunar timeshift tree-sitter-cli thunderbird
-sudo pacman -S --noconfirm --needed ueberzug unzip 
+sudo pacman -S --noconfirm --needed ueberzugpp unzip 
 sudo pacman -S --noconfirm --needed vlc vulkan-icd-loader
 sudo pacman -S --noconfirm --needed wget wine-staging
 #sudo pacman -S --noconfirm --needed x

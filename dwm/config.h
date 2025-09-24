@@ -1,39 +1,44 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 3;        /* border pixel of windows */
-static const unsigned int gappx     = 10;       /* gaps between windows */
-static const unsigned int snap      = 32;       /* snap pixel */
-static const int showbar            = 1;        /* 0 means no bar */
-static const int topbar             = 1;        /* 0 means bottom bar */
-static const int vertpad            = 10;       /* vertical padding of bar */
-static const int sidepad            = 10;       /* horizontal padding of bar */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+static const unsigned int borderpx       = 3;        /* border pixel of windows */
+static const unsigned int gappx          = 10;       /* gaps between windows */
+static const unsigned int snap           = 32;       /* snap pixel */
+static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayonleft  = 0;    /* 0: systray in the right corner, >0: systray on left of status text */
+static const unsigned int systrayspacing = 2;   /* systray spacing */
+static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on first monitor, False: display on last monitor*/
+static const int showsystray             = 1;        /* 0 means no systray */
+static const int showbar                 = 1;        /* 0 means no bar */
+static const int topbar                  = 1;        /* 0 means bottom bar */
+static const int vertpad                 = 10;       /* vertical padding of bar */
+static const int sidepad                 = 10;       /* horizontal padding of bar */
+static const char *fonts[]               = { "monospace:size=10" };
+static const char dmenufont[]            = "monospace:size=10";
 
 /* Colors */
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
+static const char col_gray1[]            = "#222222";
+static const char col_gray2[]            = "#444444";
+static const char col_gray3[]            = "#bbbbbb";
+static const char col_gray4[]            = "#eeeeee";
 
-static const char col_cyan[]        = "#005577";
+static const char col_cyan[]             = "#005577";
 
-static const char col_blue1[]       = "#a9bad0";
-static const char col_blue2[]       = "#344f83";
-static const char col_blue3[]       = "#061741";
+static const char col_blue1[]            = "#a9bad0";
+static const char col_blue2[]            = "#344f83";
+static const char col_blue3[]            = "#061741";
 
-static const char col_beige1[]	    = "#fcebbe";
-static const char col_beige2[]	    = "#594731";
-static const char col_beige3[]      = "#cdb47e";
+static const char col_beige1[]	         = "#fcebbe";
+static const char col_beige2[]	         = "#594731";
+static const char col_beige3[]           = "#cdb47e";
 
-static const char col_black[]       = "#000000";
-static const char col_white[]       = "#ffffff";
+static const char col_white[]            = "#ffffff";
+static const char col_black[]            = "#000000";
 
-static const char *colors[][3]      = {
+static const char *colors[][3]           = {
 	/*               fg          bg          border   */
-	[SchemeNorm] = { col_white , col_black ,  col_black },
-	[SchemeSel]  = { col_black , col_white ,  col_white },
+	[SchemeNorm] = { col_white, col_black, col_black },
+	[SchemeSel]  = { col_black, col_white, col_white },
 };
 
 /* tagging */
@@ -91,19 +96,19 @@ static const char *termcmd[]   = { "alacritty", NULL };
 static const char *rofi[]      = {"rofi", "-show", "drun", NULL };
 static const char *i3lock[]    = {"i3lock", "-i", "/home/greg/.config/lock.png", NULL };
 static const char *flameshot[] = {"flameshot", "gui", NULL};
+static const char *brightness[] = {"/home/greg/Scripts/brightness", NULL};
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
+	{ MODKEY|ShiftMask,		XK_b,			    spawn, 	    {.v = brightness }},
 	{ MODKEY,                       XK_c,                       spawn,          {.v = rofi } },
 	{ MODKEY,                       XK_t,                       spawn,          {.v = termcmd } },
 	{ MODKEY,			XK_l,                       spawn,          {.v = i3lock } },
 	{ MODKEY,                       XK_b,                       togglebar,      {0} },
-	{ MODKEY,                       XK_j,                       focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,                       focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,                       incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,                       incnmaster,     {.i = -1 } },
-	{ MODKEY,                       XK_h,                       setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,                       setmfact,       {.f = +0.05} },
+	{ MODKEY|ShiftMask,             XK_Left,                    setmfact,       {.f = -0.05} },
+	{ MODKEY|ShiftMask,             XK_Right,                   setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Left,                    focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_Right,                   focusstack,     {.i = -1 } },
 	{ 0,				XK_Print, 		    spawn,	    {.v = flameshot } },

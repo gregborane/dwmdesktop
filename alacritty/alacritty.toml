@@ -6,9 +6,12 @@ import = [
 [env]
 term = "xterm-256color"
 
+[window]
+
+opacity = 0.7
+blur = true
 
 [font]
-size = 8
 normal = { family = "FiraMonoNerd Font", style = "Regular" }
 bold = { family = "FiraMonoNerd Font", style = "Bold" }
 italic = { family = "FiraMono Nerd Font", style = "Italic" }

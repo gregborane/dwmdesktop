@@ -8,7 +8,7 @@ source "$CONDA_BASE/etc/profile.d/conda.sh"
 PACKAGES="$@"
 
 # Loop through all environments
-for env in $(conda env list | awk 'NR>1 && 1="#" {print $1}'); do
+for env in $(conda env list | awk 'NR>2 {print $1}'); do
 	conda activate $env
 	pip install $PACKAGES
 done
