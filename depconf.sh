@@ -55,6 +55,9 @@ cp -r "$HOME/.config/dwmdesktop/omp" "$HOME/.config"
 ## Fontconfig
 cp -r "$HOME/.config/dwmdesktop/fontconfig" "$HOME/.config"
 
+## Picom
+cp -r "$HOME/.config/dwmdesktop/picom" "$HOME/.config"
+
 ## DWM
 cp -r "$HOME/.config/dwmdesktop/dwm" "$HOME/.config/"
 cd "$HOME/.config/dwm" || exit
