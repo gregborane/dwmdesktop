@@ -1,91 +1,185 @@
-!#/bin/bash
+#!/bin/bash
 
-# Config set up
+# ==============================
+# Setup Script for dwmdesktop
+# ==============================
 
-## Create Base Folders
+ask() {
+    local prompt="$1"
+    local varname="$2"
+    if [[ "$ALL" =~ ^(y|Y|[Yy]es)$ ]]; then
+        printf -v "$varname" "yes"
+    else
+        read -p "$prompt [y/N] " "$varname"
+    fi
+}
+
+# ------------------------------
+# Global ALL
+# ------------------------------
+read -p "Install all components? [y/N] " ALL
+
+# ------------------------------
+# Base folders
+# ------------------------------
 mkdir -p "$HOME/Downloads" "$HOME/Documents" "$HOME/Pictures" "$HOME/Music" "$HOME/Templates" "$HOME/App"
 cp -r "$HOME/.config/dwmdesktop/Scripts" "$HOME/"
 
-## Config Folders
+# ------------------------------
+# Config folders
+# ------------------------------
 mkdir -p "$HOME/.fonts" "$HOME/.icons" "$HOME/.themes"
 
-## Download and Install a Nerd Font
-cd "$HOME/.fonts" || exit
-wget https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraMono.zip
-unzip FiraMono.zip
-rm FiraMono.zip
+# ------------------------------
+# Fonts
+# ------------------------------
+ask "Install FiraMono Nerd font?" FONT
+if [[ "$FONT" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cd "$HOME/.fonts" || exit
+    wget -q https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/FiraMono.zip
+    unzip -oq FiraMono.zip
+    rm -f FiraMono.zip
+fi
 
-## Download and Install Icons and Cursors
-cd "$HOME/.icons" || exit
-cp -r "$HOME/.config/dwmdesktop/Bibata-Modern-Ice" .
-git clone https://github.com/zayronxio/Zafiro-icons.git
-cd Zafiro-icons || exit
-mv Dark ../
-cd ..
-rm -rf Zafiro-icons
+# ------------------------------
+# Cursors
+# ------------------------------
+ask "Install Bibata Modern Ice cursors?" CURSOR
+if [[ "$CURSOR" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cp -r "$HOME/.config/dwmdesktop/Bibata-Modern-Ice" "$HOME/.icons/"
+fi
 
-## Download and Install a GTK theme
-cd "$HOME/.themes" || exit
-git clone https://github.com/EliverLara/Nordic.git
+# ------------------------------
+# Icons
+# ------------------------------
+ask "Install Zafiro icons?" ICON
+if [[ "$ICON" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cd "$HOME/.icons" || exit
+    git clone -q https://github.com/zayronxio/Zafiro-icons.git
+    mv Zafiro-icons/Dark .
+    rm -rf Zafiro-icons
+fi
 
-## Startup
-mkdir -p "$HOME/.dwm"
-cp "$HOME/.config/dwmdesktop/autostart.sh" "$HOME/.dwm/"
+# ------------------------------
+# GTK Theme
+# ------------------------------
+ask "Install Nordic Theme?" THEME
+if [[ "$THEME" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cd "$HOME/.themes" || exit
+    git clone -q https://github.com/EliverLara/Nordic.git
+fi
 
-## Backgrounds
-cp "$HOME/.config/dwmdesktop/wallpaper.png" "$HOME/.config/"
-cp "$HOME/.config/dwmdesktop/lock.png" "$HOME/.config/"
+# ------------------------------
+# Wallpapers
+# ------------------------------
+ask "Move wallpapers to $HOME/.config ?" WALLPAPERS
+if [[ "$WALLPAPERS" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cp "$HOME/.config/dwmdesktop/wallpaper.png" "$HOME/.config/"
+    cp "$HOME/.config/dwmdesktop/lock.png" "$HOME/.config/"
+fi
 
-## TMUX
-cp "$HOME/.config/dwmdesktop/.tmux.conf" "$HOME"
+# ------------------------------
+# TMUX
+# ------------------------------
+ask "Use TMUX configuration?" TMUX
+if [[ "$TMUX" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cp "$HOME/.config/dwmdesktop/.tmux.conf" "$HOME"
+fi
 
-## Rofi
-cp -r "$HOME/.config/dwmdesktop/rofi" "$HOME/.config/"
+# ------------------------------
+# Rofi
+# ------------------------------
+ask "Use Rofi configuration?" ROFI
+if [[ "$ROFI" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cp -r "$HOME/.config/dwmdesktop/rofi" "$HOME/.config/"
+fi
 
-## Neovim
-cp -r "$HOME/.config/dwmdesktop/nvim" "$HOME/.config"
+# ------------------------------
+# Neovim
+# ------------------------------
+ask "Use Neovim configuration?" NEOVIM
+if [[ "$NEOVIM" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cp -r "$HOME/.config/dwmdesktop/nvim" "$HOME/.config/"
+fi
 
-## Terminal
-cp -r "$HOME/.config/dwmdesktop/alacritty" "$HOME/.config"
-alacritty migrate
+# ------------------------------
+# Terminal
+# ------------------------------
+ask "Use Alacritty configuration?" CRITTY
+if [[ "$CRITTY" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cp -r "$HOME/.config/dwmdesktop/alacritty" "$HOME/.config/"
+    alacritty migrate
+fi
 
-## Oh-my-posh
-cp -r "$HOME/.config/dwmdesktop/omp" "$HOME/.config"
+# ------------------------------
+# Oh-my-posh
+# ------------------------------
+ask "Use AMRO theme with Oh-my-posh?" AMRO
+if [[ "$AMRO" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cp -r "$HOME/.config/dwmdesktop/omp" "$HOME/.config/"
+fi
 
-## Fontconfig
-cp -r "$HOME/.config/dwmdesktop/fontconfig" "$HOME/.config"
+# ------------------------------
+# Fontconfig
+# ------------------------------
+ask "Use FontConfig Configuration?" FONTCONF
+if [[ "$FONTCONF" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cp -r "$HOME/.config/dwmdesktop/fontconfig" "$HOME/.config/"
+fi
 
-## Picom
-cp -r "$HOME/.config/dwmdesktop/picom" "$HOME/.config"
+# ------------------------------
+# Picom
+# ------------------------------
+ask "Use Picom Configuration?" PICOM
+if [[ "$PICOM" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cp -r "$HOME/.config/dwmdesktop/picom" "$HOME/.config/"
+fi
 
-## DWM
-cp -r "$HOME/.config/dwmdesktop/dwm" "$HOME/.config/"
-cd "$HOME/.config/dwm" || exit
-sudo make clean install
+# ------------------------------
+# DWM
+# ------------------------------
+ask "Use inside DWM config?" DWMCONF
+if [[ "$DWMCONF" =~ ^(y|Y|[Yy]es)$ ]]; then
+    ask "Use proposed default start up (with DWM only)?" DWMSTART
+    if [[ "$DWMSTART" =~ ^(y|Y|[Yy]es)$ ]]; then
+        mkdir -p "$HOME/.dwm"
+        cp "$HOME/.config/dwmdesktop/autostart.sh" "$HOME/.dwm/"
+    fi
 
-## Apply fonts
-fc-cache
+    cp -r "$HOME/.config/dwmdesktop/dwm" "$HOME/.config/"
+    cd "$HOME/.config/dwm" || exit
+    sudo make clean install
 
-## Enable StartUp Display Manager
-sudo systemctl enable sddm
+    cp /etc/X11/xinit/xinitrc "$HOME/.xinitrc"
+    sed -i '$d' "$HOME/.xinitrc"
+    echo "exec dwm" >> "$HOME/.xinitrc"
 
-## Configure StartX
-cp /etc/X11/xinit/xinitrc "$HOME/.xinitrc"
-sed -i '$d' "$HOME/.xinitrc"
-echo "exec dwm" >> "$HOME/.xinitrc"
-
-cat <<'EOF' >> "$HOME/.bash_profile"
+    cat <<'EOF' >> "$HOME/.bash_profile"
 if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
-  exec startx
+	exec startx
 fi
 EOF
 
-sudo mkdir -p /usr/share/xsessions
-sudo tee /usr/share/xsessions/dwm.desktop > /dev/null <<EOF
+    sudo mkdir -p /usr/share/xsessions
+    sudo tee /usr/share/xsessions/dwm.desktop >/dev/null <<EOF
 [Desktop Entry]
 Name=DWM
-Comment=Light Weight Tile Windows Manager
+Comment=Light Weight Tiling Window Manager
 Exec=/usr/local/bin/dwm
 Type=Application
 EOF
+fi
+
+# ------------------------------
+# Apply fonts
+# ------------------------------
+fc-cache -f
+
+# ------------------------------
+# Display Manager
+# ------------------------------
+ask "Enable SDDM login manager?" SDDM
+if [[ "$SDDM" =~ ^(y|Y|[Yy]es)$ ]]; then
+    sudo systemctl enable sddm
+fi
 

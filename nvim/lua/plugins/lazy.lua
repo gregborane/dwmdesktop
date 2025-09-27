@@ -62,6 +62,7 @@ require("lazy").setup({
 				formatters_by_ft = {
 					python = { "ruff", "black" },
 					lua = { "stylua" },
+					bash = { "shfmt" },
 				},
 			})
 		end,

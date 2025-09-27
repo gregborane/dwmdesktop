@@ -1,31 +1,39 @@
-!#/bin/bash
+#!/bin/bash
 
-# Install zoxide
-zoxide init bash >> "$HOME/.bash_zoxide"
+ask() {
+    local prompt="$1"
+    local varname="$2"
+    if [[ "$ALL" =~ ^(y|Y|[Yy]es)$ ]]; then
+        printf -v "$varname" "yes"
+    else
+        read -p "$prompt [y/N] " "$varname"
+    fi
+}
 
-cat <<'EOF' >> "$HOME/.bashrc"
+# ------------------------------
+# Global ALL
+# ------------------------------
+read -p "Apply full Bash setup (zoxide, aliases, editors, PATH)? [y/N] " ALL
 
+# ------------------------------
+# zoxide
+# ------------------------------
+ask "Install zoxide?" INSTALL_ZOXIDE
+if [[ "$INSTALL_ZOXIDE" =~ ^(y|Y|[Yy]es)$ ]]; then
+    zoxide init bash >> "$HOME/.bash_zoxide"
+    cat <<'EOF' >> "$HOME/.bashrc"
 if [ -f "$HOME/.bash_zoxide" ]; then
     . "$HOME/.bash_zoxide"
 fi
-
-if [ -f "$HOME/.bash_aliases" ]; then
-    . "$HOME/.bash_aliases"
+EOF
 fi
 
-# Path Variables
-export TERM='xterm-256color'
-export EDITOR='nvim'
-export VISUAL='nvim'
-
-tmux >> /dev/null
-eval $(ssh-agent -s) >> /dev/null
-
-eval $(oh-my-posh init bash --config /home/greg/.config/omp/theme.json)
-EOF
-
-# aliases
-cat >> "$HOME/.bash_aliases" <<'EOF'
+# ------------------------------
+# Aliases
+# ------------------------------
+ask "Set up Bash aliases?" INSTALL_ALIASES
+if [[ "$INSTALL_ALIASES" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cat >> "$HOME/.bash_aliases" <<'EOF'
 #!/bin/bash
 
 # ls
@@ -49,9 +57,60 @@ alias cd="z"
 # sudo
 alias sudo="sudo -E"
 EOF
+fi
 
-# profile PATH setup
-cat >> "$HOME/.bash_profile" <<'EOF'
+# ------------------------------
+# Editor wrappers
+# ------------------------------
+ask "Set default editor wrappers?" INSTALL_EDITORS
+if [[ "$INSTALL_EDITORS" =~ ^(y|Y|[Yy]es)$ ]]; then
+    sudo tee /usr/bin/vim >/dev/null <<'EOF'
+#!/bin/bash
+nvim "$@"
+EOF
+    sudo chmod +x /usr/bin/vim
+
+    sudo tee /usr/bin/gedit >/dev/null <<'EOF'
+#!/bin/bash
+gnome-text-editor "$@"
+EOF
+    sudo chmod +x /usr/bin/gedit
+
+    sudo tee /usr/bin/nano >/dev/null <<'EOF'
+#!/bin/bash
+nvim "$@"
+EOF
+    sudo chmod +x /usr/bin/nano
+fi
+
+# ------------------------------
+# Bashrc additions
+# ------------------------------
+ask "Append Bashrc configurations (editor, TERM, tmux, oh-my-posh)?" INSTALL_BASHRC
+if [[ "$INSTALL_BASHRC" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cat <<'EOF' >> "$HOME/.bashrc"
+if [ -f "$HOME/.bash_aliases" ]; then
+    . "$HOME/.bash_aliases"
+fi
+
+export TERM='xterm-256color'
+export EDITOR='nvim'
+export VISUAL='nvim'
+
+tmux
+
+eval $(ssh-agent -s) >> /dev/null
+
+eval $(oh-my-posh init bash --config /home/greg/.config/omp/theme.json)
+EOF
+fi
+
+# ------------------------------
+# Bash profile PATH setup
+# ------------------------------
+ask "Set up PATH in .bash_profile?" INSTALL_PATH
+if [[ "$INSTALL_PATH" =~ ^(y|Y|[Yy]es)$ ]]; then
+    cat >> "$HOME/.bash_profile" <<'EOF'
 if [ -d "$HOME/.local/bin" ]; then
     PATH=$PATH:$HOME/.local/bin
 fi
@@ -62,23 +121,5 @@ fi
 
 export PATH
 EOF
-
-# Create command wrappers
-sudo tee /usr/bin/vim > /dev/null <<'EOF'
-#!/bin/bash
-nvim "$@"
-EOF
-sudo chmod +x /usr/bin/vim
-
-sudo tee /usr/bin/gedit > /dev/null <<'EOF'
-#!/bin/bash
-gnome-text-editor "$@"
-EOF
-sudo chmod +x /usr/bin/gedit
-
-sudo tee /usr/bin/nano > /dev/null <<'EOF'
-#!/bin/bash
-nvim "$@"
-EOF
-sudo chmod +x /usr/bin/nano
+fi
 

@@ -1,5 +1,5 @@
 -- theming
-vim.cmd("colorscheme tokyonight-storm")
+vim.cmd("colorscheme tokyonight")
 
 -- iron config
 local iron = require("iron.core")
