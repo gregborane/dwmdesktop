@@ -36,7 +36,6 @@ Are created with newnick.sh
 
 SHOULD ADD :
 
-error handling,
-more precise readme 
-package source 
-log
+Systray icons for brightness, sounds and battery information
+More Themes mb.
+Logs ?
