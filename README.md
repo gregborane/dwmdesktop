@@ -7,7 +7,10 @@
 
 ## EXECUTE DEPENCIES.SH for set up.
 
-Refer to folder for their relative information.
+Refer to folder for their relative information & configuration.\
+pacpack.sh installs some utilities for the system going from thunderbird, vlc, feh, obs-studio, steam, lutris, wine, etc ...\
+No AUR packages are installed by default. Considering previous drama, I prefered removing their installation.\
+I believe, the system is complete enough to be used out of the box.
 
 ## Depencies.sh
 
@@ -39,8 +42,4 @@ Are installed using depconf.sh
 
 Are created with newnick.sh
 
-SHOULD ADD :
 
-Systray icons for brightness, sounds and battery information
-More Themes mb.
-Logs ?
