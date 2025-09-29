@@ -1,5 +1,10 @@
 # My X11 config using DWM based on Arch
 
+## Quick overview of the result
+
+![Alt Text](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXR0OXF2NjQ2ZDhwcGd5a3h1aWJhcms4dGVzZTYzendwNjBmbWcxNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/VuYwB1G8XZTcyTvUpJ/giphy.gif)
+
+
 ## EXECUTE DEPENCIES.SH for set up.
 
 Refer to folder for their relative information.

@@ -18,14 +18,14 @@ sudo pacman -S --noconfirm --needed jdk-openjdk julia
 sudo pacman -S --noconfirm --needed less libreoffice-fresh linux-lts linux-lts-docs linux-lts-headers luarocks lutris
 sudo pacman -S --noconfirm --needed mariadb mermaid-cli
 sudo pacman -S --noconfirm --needed ncurse neovim ninja noto-fonts-emoji nuspell nwg-look
-sudo pacman -S --noconfirm --needed openal openssh
+sudo pacman -S --noconfirm --needed obs-studio openal openssh
 sudo pacman -S --noconfirm --needed pavucontrol php picom python-neovim
 sudo pacman -S --noconfirm --needed qt5 qt6
-sudo pacman -S --noconfirm --needed r ripgrep rofi ruby
+sudo pacman -S --noconfirm --needed r ripgrep rofi rofi-calc ruby
 sudo pacman -S --noconfirm --needed sddm sqlite sshfs steam
 sudo pacman -S --noconfirm --needed tectonic texlive thunar timeshift tree-sitter-cli thunderbird
-sudo pacman -S --noconfirm --needed ueberzugpp unzip 
-sudo pacman -S --noconfirm --needed vlc vulkan-icd-loader
+sudo pacman -S --noconfirm --needed ueberzugpp upower unzip 
+sudo pacman -S --noconfirm --needed vlc vlc-plugin-ffmpeg vulkan-icd-loader
 sudo pacman -S --noconfirm --needed wget wine-staging
 #sudo pacman -S --noconfirm --needed x
 #sudo pacman -S --noconfirm --needed y

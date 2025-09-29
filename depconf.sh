@@ -183,3 +183,14 @@ if [[ "$SDDM" =~ ^(y|Y|[Yy]es)$ ]]; then
     sudo systemctl enable sddm
 fi
 
+# ------------------------------
+# Desktop Files
+# ------------------------------
+ask "Create desktop files for all utilies?" UTILITIES
+if [[ "$UTILIES" =~ ^(y|Y|[Yy]es)$ ]]; then
+	if [[ ! -d "$HOME/.local/share/applications" ]]: then
+		mkdir $HOME/.local/share/applications
+	fi
+
+	mv "$HOME/.config/dwmdesktop/desktop_files/*" "$HOME/.local/share/applications"
+fi
