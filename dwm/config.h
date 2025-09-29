@@ -17,21 +17,6 @@ static const char *fonts[]               = { "monospace:size=10" };
 static const char dmenufont[]            = "monospace:size=10";
 
 /* Colors */
-static const char col_gray1[]            = "#222222";
-static const char col_gray2[]            = "#444444";
-static const char col_gray3[]            = "#bbbbbb";
-static const char col_gray4[]            = "#eeeeee";
-
-static const char col_cyan[]             = "#005577";
-
-static const char col_blue1[]            = "#a9bad0";
-static const char col_blue2[]            = "#344f83";
-static const char col_blue3[]            = "#061741";
-
-static const char col_beige1[]	         = "#fcebbe";
-static const char col_beige2[]	         = "#594731";
-static const char col_beige3[]           = "#cdb47e";
-
 static const char col_white[]            = "#ffffff";
 static const char col_black[]            = "#000000";
 
@@ -91,16 +76,57 @@ view_adjacent(const Arg *arg) {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]   = { "alacritty", NULL };
-static const char *rofi[]      = {"rofi", "-show", "drun", NULL };
-static const char *i3lock[]    = {"i3lock", "-i", "/home/greg/.config/lock.png", NULL };
-static const char *flameshot[] = {"flameshot", "gui", NULL};
-static const char *brightness[] = {"/home/greg/Scripts/brightness", NULL};
+static const char *dmenucmd[] = { 
+	"dmenu_run", 
+	"-m", 
+	dmenumon, 
+	"-fn", 
+	dmenufont, 
+	"-nb", 
+	col_black, 
+	"-nf", 
+	col_white, 
+	"-sb", 
+	col_white, 
+	"-sf", 
+	col_black, 
+	NULL };
+
+static const char *termcmd[] = { 
+	"alacritty", 
+	NULL };
+
+static const char *rofi[] = {
+	"rofi",
+    	"-show", "drun",
+    	"-modi", "drun,calc,top",
+    	"-run-command", "/home/greg/.config/rofi/rofi-drun.sh {cmd}",
+    	NULL
+};
+
+static const char *i3lock[] = {
+	"i3lock", 
+	"-i", 
+	"/home/greg/.config/lock.png", 
+	NULL };
+
+static const char *flameshot[] = {
+	"flameshot", 
+	"gui", 
+	NULL};
+
+static const char *brightness[] = {
+	"brightness", 
+	NULL};
+
+static const char *pavuctll[] = {
+	"pavucontrol", 
+	NULL};
 
 static const Key keys[] = {
-	/* modifier                     key        function        argument */
-	{ MODKEY|ShiftMask,		XK_b,			    spawn, 	    {.v = brightness }},
+	/* modifier                     key                         function        argument */
+	{ MODKEY|ShiftMask,		XK_s,			    spawn,          {.v = pavuctll } },
+	{ MODKEY|ShiftMask,		XK_b,			    spawn, 	    {.v = brightness } },
 	{ MODKEY,                       XK_c,                       spawn,          {.v = rofi } },
 	{ MODKEY,                       XK_t,                       spawn,          {.v = termcmd } },
 	{ MODKEY,			XK_l,                       spawn,          {.v = i3lock } },

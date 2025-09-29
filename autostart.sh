@@ -1,6 +1,6 @@
 #!/bin/bash
 
-picom --config /home/greg/.config/picom/picom.conf &
-feh --bg-scale /home/greg/.config/wallpaper.png &
+picom --config "$HOME/.config/picom/picom.conf" &
+feh --bg-scale "$HOME/.config/wallpaper.png" &
 
 

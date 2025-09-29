@@ -1,38 +1,41 @@
 #!/bin/bash
 
 # update dwm config
-rm -rf $HOME/.config/dwmdesktop/dwm
-cp -r  $HOME/.config/dwm  $HOME/.config/dwmdesktop
+rm -rf "$HOME/.config/dwmdesktop/dwm"
+cp -r  "$HOME/.config/dwm" "$HOME/.config/dwmdesktop"
 
 # update autostart
-rm -f $HOME/.config/dwmdesktop/autostart.sh
-cp $HOME/.dwm/autostart.sh  $HOME/.config/dwmdesktop
+rm -f "$HOME/.config/dwmdesktop/autostart.sh"
+cp "$HOME/.dwm/autostart.sh"  "$HOME/.config/dwmdesktop"
 
 # update scripts
-rm -rf $HOME/.config/dwmdesktop/Scripts
-cp -r $HOME/Scripts $HOME/.config/dwmdesktop
+rm -rf "$HOME/.config/dwmdesktop/Scripts"
+cp -r "$HOME/Scripts" "$HOME/.config/dwmdesktop"
 
 # update alacritty
-rm -rf $HOME/.config/dwmdesktop/alacritty
-cp -r $HOME/.config/alacritty $HOME/.config/dwmdesktop/
+rm -rf "$HOME/.config/dwmdesktop/alacritty"
+cp -r "$HOME/.config/alacritty" "$HOME/.config/dwmdesktop/"
 
 # update tmux
-rm -f $HOME/.config/dwmdesktop/.tmux.config
-cp -r $HOME/.tmux.conf $HOME/.config/dwmdesktop
+rm -f "$HOME/.config/dwmdesktop/.tmux.config"
+cp -r "$HOME/.tmux.conf" "$HOME/.config/dwmdesktop"
 
 # update oh my posh
-rm -rf $HOME/.config/dwmdesktop/omp
-cp -r $HOME/.config/omp $HOME/.config/dwmdesktop/omp
+rm -rf "$HOME/.config/dwmdesktop/omp"
+cp -r "$HOME/.config/omp" "$HOME/.config/dwmdesktop/omp"
 
 # update neovim
-rm -rf $HOME/.config/dwmdesktop/nvim
-cp -r $HOME/.config/nvim $HOME/.config/dwmdesktop/nvim
+rm -rf "$HOME/.config/dwmdesktop/nvim"
+cp -r "$HOME/.config/nvim" "$HOME/.config/dwmdesktop/nvim"
 
 # update font configuration
-rm -rf $HOME/.config/dwmdesktop/fontconfig
-cp -r $HOME/.config/fontconfig $HOME/.config/dwmdesktop/fontconfig
+rm -rf "$HOME/.config/dwmdesktop/fontconfig"
+cp -r "$HOME/.config/fontconfig" "$HOME/.config/dwmdesktop/fontconfig"
 
 # update picom conf
+rm -rf "$HOME/.config/dwmdesktop/picom"
+cp -r "$HOME/.config/picom" "$HOME/.config/dwmdesktop/picom"
 
-rm -rf $HOME/.config/dwmdesktop/picom
-cp -r $HOME/.config/picom $HOME/.config/dwmdesktop/picom
+# updata rofi conf
+rm -rf "$HOME/.config/dwmdesktop/rofi"
+cp -r "$HOME/.config/rofi" "$HOME/.config/dwmdesktop/rofi"
