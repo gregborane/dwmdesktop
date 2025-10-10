@@ -1,6 +1,6 @@
 [general]
 import = [
-"~/.config/alacritty/tokyo-night-storm.toml",
+"~/.config/alacritty/dark-tool.toml",
 ]
 
 [env]

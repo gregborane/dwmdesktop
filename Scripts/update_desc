@@ -36,6 +36,10 @@ cp -r "$HOME/.config/fontconfig" "$HOME/.config/dwmdesktop/fontconfig"
 rm -rf "$HOME/.config/dwmdesktop/picom"
 cp -r "$HOME/.config/picom" "$HOME/.config/dwmdesktop/picom"
 
-# updata rofi conf
+# update rofi conf
 rm -rf "$HOME/.config/dwmdesktop/rofi"
 cp -r "$HOME/.config/rofi" "$HOME/.config/dwmdesktop/rofi"
+
+# update tmux conf
+rm -rf "$HOME/.config/dwmdestop/tmux"
+cp -r "$HOME/.config/tmux" "$HOME/.config/dwmdesktop/tmux"

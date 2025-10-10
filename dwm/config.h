@@ -130,7 +130,6 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_c,                       spawn,          {.v = rofi } },
 	{ MODKEY,                       XK_t,                       spawn,          {.v = termcmd } },
 	{ MODKEY,			XK_l,                       spawn,          {.v = i3lock } },
-	{ MODKEY,                       XK_b,                       togglebar,      {0} },
 	{ MODKEY,                       XK_i,                       incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_d,                       incnmaster,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Left,                    setmfact,       {.f = -0.05} },
