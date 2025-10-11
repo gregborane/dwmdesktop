@@ -195,3 +195,22 @@ if [[ "$UTILIES" =~ ^(y|Y|[Yy]es)$ ]]; then
 
 	mv "$HOME/.config/dwmdesktop/desktop_files/*" "$HOME/.local/share/applications"
 fi
+
+# ------------------------------
+# Slock
+# ------------------------------
+ask "Install Slock?" SLOCK
+if [[ "$SLOCK" =~ ^(y|Y|[Yy]es)$ ]]; then
+	cd $HOME/.fonts/
+	git clone https://github.com/fcambus/spleen.git
+	sudo mv $HOME/.fonts/spleen /usr/share/fonts/misc
+	sudo mkfontscale
+	sudo mkfontdir
+	sudo fc-cache -fv
+	xset +fp /usr/share/fonts/misc/spleen
+	echo "xset +fp /usr/share/fonts/misc/spleen" >> ~/.xinitrc
+	cp "$HOME/.config/dwmdesktop/slock" "$HOME/.config"
+
+	cd "$HOME/.config/slock" || exit
+	sudo make clean install
+fi

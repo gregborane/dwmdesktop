@@ -41,5 +41,11 @@ rm -rf "$HOME/.config/dwmdesktop/rofi"
 cp -r "$HOME/.config/rofi" "$HOME/.config/dwmdesktop/rofi"
 
 # update tmux conf
-rm -rf "$HOME/.config/dwmdestop/tmux"
+rm -rf "$HOME/.config/dwmdesktop/tmux"
 cp -r "$HOME/.config/tmux" "$HOME/.config/dwmdesktop/tmux"
+
+# update slock config
+rm -rf "$HOME/.config/dwmdesktop/slock"
+cp -r "$HOME/.config/slock" "$HOME/.config/dwmdesktop/slock"
+
+

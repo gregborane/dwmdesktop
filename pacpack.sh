@@ -27,7 +27,7 @@ sudo pacman -S --noconfirm --needed tectonic texlive thunar timeshift tree-sitte
 sudo pacman -S --noconfirm --needed ueberzugpp upower unzip 
 sudo pacman -S --noconfirm --needed vlc vlc-plugin-ffmpeg vulkan-icd-loader
 sudo pacman -S --noconfirm --needed wget wine-staging
-#sudo pacman -S --noconfirm --needed x
+sudo pacman -S --noconfirm --needed xorg-mkfontscale
 #sudo pacman -S --noconfirm --needed y
 sudo pacman -S --noconfirm --needed zathura zip zoxide
 
