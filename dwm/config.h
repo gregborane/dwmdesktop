@@ -105,9 +105,7 @@ static const char *rofi[] = {
 };
 
 static const char *i3lock[] = {
-	"i3lock", 
-	"-i", 
-	"/home/greg/.config/lock.png", 
+	"/home/greg/.dwm/lock.sh",
 	NULL };
 
 static const char *flameshot[] = {

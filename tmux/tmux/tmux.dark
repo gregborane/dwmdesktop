@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 # True color settings
@@ -11,13 +12,6 @@ set -g visual-activity off
 # Enable mouse support
 set -g mouse on
 
-# TOKYO NIGHT (storm) palette used:
-# bg         = #1d2230
-# fg         = #c0caf5
-# muted-grey = #565f89
-# storm-blue = #394260
-# accent-blue = #7aa2f7
-
 # DESIGN TWEAKS
 
 # don't do anything when a 'bell' rings
@@ -28,39 +22,40 @@ setw -g monitor-activity off
 set -g bell-action none
 
 # clock mode
-setw -g clock-mode-colour '#394260'
+setw -g clock-mode-colour '#3b2f45'  # blue from normal
 
 # copy mode
-setw -g mode-style 'fg=#c0caf5 bg=#394260 bold'
+setw -g mode-style 'fg=#c8c8c8 bg=#1a1a1b bold'  # foreground + normal black
 
 # panes
-set -g pane-border-style 'fg=#565f89'
-set -g pane-active-border-style 'fg=#7aa2f7'
+set -g pane-border-style 'fg=#5a4c45'  # cyan normal
+set -g pane-active-border-style 'fg=#7a6e61'  # approximate accent-blue with magenta/bright colors
 
 # statusbar: full-width background + readable fg
 set -g status-position bottom
 set -g status-justify left
-set -g status-style 'fg=#c0caf5 bg=#1d2230'
+set -g status-style 'fg=#7a3d5c bg=#0c0c0d'  # primary foreground/background
 
 # ensure status left/right can grow to fill the line
 set -g status-left ''
 set -g status-left-length 40
 set -g status-right-length 150
 
-set -g status-right-style 'fg=#c0caf5 bg=#394260'
+set -g status-right-style 'fg=#c8c8c8 bg=#5a4c45'  # cyan normal
 set -g status-right '%Y-%m-%d %H:%M '
 
 # current window (active)
-setw -g window-status-current-style 'fg=#1d2230 bg=#7aa2f7'
+setw -g window-status-current-style 'fg=#0c0c0d bg=#cc6a1d'  # background + yellow normal
 setw -g window-status-current-format ' #I #W #F '
 
 # inactive windows
-setw -g window-status-style 'fg=#394260 bg=#1d2230'
-setw -g window-status-format ' #I #[fg=#c0caf5]#W #[fg=#1d2230]#F '
+setw -g window-status-style 'fg=#7a3d5c bg=#0c0c0d'  # blue normal + background
+setw -g window-status-format ' #I #[fg=#c8c8c8]#W #[fg=#0c0c0d]#F '
 
 # bell in window list
-setw -g window-status-bell-style 'fg=#394260 bg=#565f89'
+setw -g window-status-bell-style 'fg=#7a3d5c bg=#565f89'  # blue normal + muted grey approximation
 
 # messages
-set -g message-style 'fg=#c0caf5 bg=#1d2230 bold'
+set -g message-style 'fg=#c8c8c8 bg=#0c0c0d bold'  # primary fg/bg
+
 

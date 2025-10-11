@@ -144,6 +144,7 @@ if [[ "$DWMCONF" =~ ^(y|Y|[Yy]es)$ ]]; then
     if [[ "$DWMSTART" =~ ^(y|Y|[Yy]es)$ ]]; then
         mkdir -p "$HOME/.dwm"
         cp "$HOME/.config/dwmdesktop/autostart.sh" "$HOME/.dwm/"
+	cp "$HOME/.config/dwmdesktop/lock.sh" "$HOME/.dwm/"
     fi
 
     cp -r "$HOME/.config/dwmdesktop/dwm" "$HOME/.config/"

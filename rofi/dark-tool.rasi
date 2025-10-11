@@ -4,16 +4,15 @@
  */
 
 * {
-    bg: #0c0c0d;               /* deep dark grey background */
-    hv: #ff4535;               /* TOOL red highlight */
-    primary: #c8c8c8;          /* main foreground */
+    bg: #181715;               /* deep dark grey background */
+    hv: #241b6c;               /* TOOL red highlight */
+    primary: #dbd4db;          /* main foreground */
     ug: #3a3a3d;               /* muted dark accent */
-    font: "Monospace 11";
     background-color: @bg;
     border: 0px;
-    kl: #cc6a1d;               /* orange accent */
+    kl: #531850;               
     black: #000000;
-    transparent: rgba(12,12,13,0);
+    transparent: #ffff00;
 }
 
 /* Window */

@@ -18,3 +18,10 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 		end
 	end,
 })
+
+vim.api.nvim_create_autocmd({ "VimResized", "WinNew", "WinClosed" }, {
+  callback = function()
+    vim.cmd("wincmd =")
+  end,
+})
+
