@@ -119,6 +119,7 @@ if [ -d "$HOME/Scripts" ]; then
     PATH=$PATH:$HOME/Scripts
 fi
 
+xset +fp /usr/share/fonts/misc/spleen
 export PATH
 EOF
 fi
