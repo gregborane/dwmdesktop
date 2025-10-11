@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 import gi, subprocess
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GLib, Gdk
@@ -7,7 +8,7 @@ def run(cmd):
     return subprocess.run(cmd, shell=True, text=True, capture_output=True).stdout.strip()
 
 def set_brightness(v):
-    subprocess.run(f"xrandr --output DP-0 --brightness {float(v)/100}", shell=True)
+    subprocess.run(f"xrandr --output eDP-1 --brightness {float(v)/100}", shell=True)
 
 def get_brightness():
     out = run("xrandr --verbose | grep -i brightness | head -n1")
@@ -45,7 +46,14 @@ def set_mic(source, v):
     subprocess.run(["pactl", "set-source-volume", source, f"{int(v)}%"])
 
 def get_battery_info():
-    return run("upower -i /org/freedesktop/UPower/devices/battery_BAT0 | egrep 'percentage:|state:|time to empty:'")
+    raw = run("upower -i /org/freedesktop/UPower/devices/battery_BAT0 | egrep 'percentage:|state:|time to empty:|time to full:'")
+    lines = []
+    for line in raw.splitlines():
+        if ":" in line:
+            key, val = line.split(":", 1)
+            lines.append(f"{key.strip():<15}: {val.strip()}")
+    return "\n".join(lines)
+
 
 class PopupWindow(Gtk.Window):
     def __init__(self):
@@ -78,7 +86,7 @@ class PopupWindow(Gtk.Window):
 
         # Output volume
         sink = get_default_sink()
-        box.pack_start(Gtk.Label(label=f"Output Volume ({sink})"), False, False, 0)
+        box.pack_start(Gtk.Label(label=f"Output Volume "), False, False, 0)
         vol = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, 0, 150, 1)
         vol.set_value(get_volume(sink))
         vol.connect("value-changed", lambda s: set_volume(sink, s.get_value()))
@@ -86,7 +94,7 @@ class PopupWindow(Gtk.Window):
 
         # Microphone
         src = get_default_source()
-        box.pack_start(Gtk.Label(label=f"Microphone ({src})"), False, False, 0)
+        box.pack_start(Gtk.Label(label=f"Microphone "), False, False, 0)
         mic = Gtk.Scale.new_with_range(Gtk.Orientation.HORIZONTAL, 0, 150, 1)
         mic.set_value(get_mic(src))
         mic.connect("value-changed", lambda s: set_mic(src, s.get_value()))
@@ -94,9 +102,20 @@ class PopupWindow(Gtk.Window):
 
         # Battery
         box.pack_start(Gtk.Label(label="Battery Info"), False, False, 0)
-        self.bat_label = Gtk.Label(label=get_battery_info())
+
+        info = get_battery_info()
+        info = info.replace(" ", "\u00A0")  # preserve spacing
+        info = GLib.markup_escape_text(info)
+
+        self.bat_label = Gtk.Label()
+        self.bat_label.set_use_markup(True)
+        self.bat_label.set_selectable(False)
+        self.bat_label.set_line_wrap(False)
         self.bat_label.set_xalign(0)
+        self.bat_label.set_markup(f"<span font='monospace'>{info}</span>")
+
         box.pack_start(self.bat_label, False, False, 0)
+
 
         # Close button
         close_btn = Gtk.Button(label="Close")
@@ -122,14 +141,17 @@ class PopupWindow(Gtk.Window):
         if self._update_id:
             GLib.source_remove(self._update_id)
             self._update_id = None
-        gdkwin = self.get_window()
-        if gdkwin:
-            gdkwin.ungrab_pointer(Gdk.CURRENT_TIME)
-            gdkwin.ungrab_keyboard(Gdk.CURRENT_TIME)
+        display = Gdk.Display.get_default()
+        seat = display.get_default_seat()
+        seat.ungrab()
 
     def _refresh_battery(self):
-        self.bat_label.set_text(get_battery_info())
+        info = get_battery_info()
+        info = info.replace(" ", "\u00A0")
+        info = GLib.markup_escape_text(info)
+        self.bat_label.set_markup(f"<span font='monospace'>{info}</span>")
         return True
+
 
     def popup_at_pointer(self):
         self.show_all()
@@ -137,6 +159,8 @@ class PopupWindow(Gtk.Window):
         GLib.idle_add(self._position_near_pointer)
 
     def _position_near_pointer(self):
+        device = Gdk.Display.get_default().get_default_seat().get_pointer()
+        _, x, y = device.get_position()
         display = Gdk.Display.get_default()
         pointer = display.get_pointer()[1:3]
 
@@ -151,12 +175,18 @@ class PopupWindow(Gtk.Window):
         return False
 
     def _grab_pointer_keyboard(self):
+        display = Gdk.Display.get_default()
+        seat = display.get_default_seat()
         gdkwin = self.get_window()
         if gdkwin:
-            gdkwin.grab_pointer(True,
-                                Gdk.EventMask.BUTTON_PRESS_MASK,
-                                None, None, Gdk.CURRENT_TIME)
-            gdkwin.grab_keyboard(True, Gdk.CURRENT_TIME)
+            seat.grab(
+                gdkwin,
+                Gdk.SeatCapabilities.POINTER | Gdk.SeatCapabilities.KEYBOARD,
+                True,
+                None,
+                None,
+                None,
+        )  
 
     def do_button_press_event(self, event):
         self.hide()
