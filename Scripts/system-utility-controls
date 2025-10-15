@@ -117,11 +117,6 @@ class PopupWindow(Gtk.Window):
         box.pack_start(self.bat_label, False, False, 0)
 
 
-        # Close button
-        close_btn = Gtk.Button(label="Close")
-        close_btn.connect("clicked", lambda w: self.hide())
-        box.pack_start(close_btn, False, False, 0)
-
     def _on_realize(self, *args):
         gdkwin = self.get_window()
         if gdkwin:

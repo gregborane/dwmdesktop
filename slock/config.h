@@ -9,8 +9,8 @@ static const char *colorname[NUMCOLS] = {
 static const int failonclear = 1;
 
 /* size of square in px */
-static const int squaresize = 50;
-static const int squarespacing = 10;
+static const int squaresize = 30;
+static const int squarespacing = 5;
 
 /* Patch : Message */
 #include <stdio.h>

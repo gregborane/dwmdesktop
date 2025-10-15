@@ -48,4 +48,13 @@ cp -r "$HOME/.config/tmux" "$HOME/.config/dwmdesktop/tmux"
 rm -rf "$HOME/.config/dwmdesktop/slock"
 cp -r "$HOME/.config/slock" "$HOME/.config/dwmdesktop/slock"
 
+# update backgrounds
+rm -rf "$HOME/.config/dwmdesktop/wallpaper.png"
+cp -r "$HOME/.config/wallpaper.png" "$HOME/.config/dwmdesktop"
+
+rm -rf "$HOME/.config/dwmdesktop/lock.png"
+cp -r "$HOME/.config/lock.png" "$HOME/.config/dwmdesktop"
+
+
+
 
