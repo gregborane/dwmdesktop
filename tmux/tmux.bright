@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# True color settings
+# TOOL-inspired tmux theme (dark grey dominant, from Alacritty TOOL theme)
+
+# True color
 set -g default-terminal "xterm-256color"
 set-option -ga terminal-overrides ",xterm-256color:Tc"
 
@@ -8,59 +10,61 @@ set-option -ga terminal-overrides ",xterm-256color:Tc"
 set -gq allow-passthrough on
 set -g visual-activity off
 
-# Enable mouse support
+# Mouse
 set -g mouse on
 
-# TOKYO NIGHT (storm) palette used:
-# bg         = #1d2230
-# fg         = #c0caf5
-# muted-grey = #565f89
-# storm-blue = #394260
-# accent-blue = #7aa2f7
+# TOOL color palette
+# bg         = #181715
+# fg         = #dbd4db
+# dark-grey  = #2e2b27
+# red        = #ff2a1a
+# green      = #7fc85a
+# yellow     = #c6d95a
+# blue       = #3a2cff
+# magenta    = #ff2b7f
+# cyan       = #9d8cff
+# white      = #ffffff
 
-# DESIGN TWEAKS
-
-# don't do anything when a 'bell' rings
+# Bell behavior
 set -g visual-activity off
 set -g visual-bell off
 set -g visual-silence off
 setw -g monitor-activity off
 set -g bell-action none
 
-# clock mode
-setw -g clock-mode-colour '#394260'
+# Clock
+setw -g clock-mode-colour '#9d8cff'
 
-# copy mode
-setw -g mode-style 'fg=#c0caf5 bg=#394260 bold'
+# Copy mode
+setw -g mode-style 'fg=#dbd4db bg=#2e2b27 bold'
 
-# panes
-set -g pane-border-style 'fg=#565f89'
-set -g pane-active-border-style 'fg=#7aa2f7'
+# Pane borders
+set -g pane-border-style 'fg=#2e2b27'
+set -g pane-active-border-style 'fg=#9d8cff'
 
-# statusbar: full-width background + readable fg
+# Status bar
 set -g status-position bottom
 set -g status-justify left
-set -g status-style 'fg=#c0caf5 bg=#1d2230'
+set -g status-style 'fg=#dbd4db bg=#181715'
 
-# ensure status left/right can grow to fill the line
 set -g status-left ''
 set -g status-left-length 40
 set -g status-right-length 150
 
-set -g status-right-style 'fg=#c0caf5 bg=#394260'
-set -g status-right '%Y-%m-%d %H:%M '
+set -g status-right-style 'fg=#dbd4db bg=#2e2b27'
+set -g status-right '#[fg=#c6d95a]%Y-%m-%d %H:%M #[fg=#dbd4db]'
 
-# current window (active)
-setw -g window-status-current-style 'fg=#1d2230 bg=#7aa2f7'
-setw -g window-status-current-format ' #I #W #F '
+# Active window
+setw -g window-status-current-style 'fg=#181715 bg=#7fc85a bold'
+setw -g window-status-current-format ' #I #[fg=#181715]#W #[fg=#7fc85a]#F '
 
-# inactive windows
-setw -g window-status-style 'fg=#394260 bg=#1d2230'
-setw -g window-status-format ' #I #[fg=#c0caf5]#W #[fg=#1d2230]#F '
+# Inactive windows
+setw -g window-status-style 'fg=#9d8cff bg=#181715'
+setw -g window-status-format ' #I #[fg=#dbd4db]#W #[fg=#181715]#F '
 
-# bell in window list
-setw -g window-status-bell-style 'fg=#394260 bg=#565f89'
+# Bell in window list
+setw -g window-status-bell-style 'fg=#181715 bg=#ff2a1a bold'
 
-# messages
-set -g message-style 'fg=#c0caf5 bg=#1d2230 bold'
+# Messages
+set -g message-style 'fg=#dbd4db bg=#2e2b27 bold'
 

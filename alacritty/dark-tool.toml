@@ -1,34 +1,35 @@
-# TOOL-inspired Alacritty theme (dark grey dominant, based on wallpaper)
+# Sepia Automaton Alacritty theme (tone-matched, TOOL-derived)
+# Save as: ~/.config/alacritty/colors/sepia_automaton.toml
 
 [colors.primary]
-	background = '#181715'   
-	foreground = '#dbd4db'
+background = "#0d0a07"  # deep brown-black
+foreground = "#cbb9a0"  # parchment beige
 
 [colors.normal]
-	black      = '#181715'
-	red        = '#b21204'
-	yellow     = '#7b8749'
-	green      = '#4f6a41'
-	blue       = '#241b6c'
-	magenta    = '#a20e48'
-	cyan       = '#6b58b1'
-	white      = '#dbd4db'
+black   = "#1a1a1b"
+red     = "#c27b55"
+green   = "#8f8e74"
+yellow  = "#d2b67f"
+blue    = "#7a92a6"   # folder tone blue preserved
+magenta = "#a37b74"
+cyan    = "#9ca38b"
+white   = "#cbb9a0"
 
 [colors.bright]
-    	black      = '#2e2b27'
-    	red        = '#ff2a1a'
-    	yellow     = '#c6d95a'
-	green      = '#7fc85a'
-	blue       = '#3a2cff'
-	magenta    = '#ff2b7f'
-	cyan       = '#9d8cff'
-	white      = '#ffffff'
+black   = "#4a4037"
+red     = "#e09573"
+green   = "#a9a480"
+yellow  = "#e3c89f"
+blue    = "#96a8b7"   # same tone family as folder blue
+magenta = "#c39a8b"
+cyan    = "#b8bfa6"
+white   = "#f1e8d8"
 
 [colors.cursor]
-    	text       = '#181715'
-    	cursor     = '#dbd4db'
-  
+text   = "#0d0a07"
+cursor = "#d2b67f"
+
 [colors.selection]
-    	text       = '#2e2b27'
-    	background = '#a20e48'
+text       = "#0d0a07"
+background = "#d2b67f"
 

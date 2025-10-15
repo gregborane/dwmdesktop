@@ -4,13 +4,13 @@
  */
 
 * {
-    bg: #181715;               /* deep dark grey background */
-    hv: #241b6c;               /* TOOL red highlight */
+    bg: #0a0805;               /* deep dark grey background */
+    hv: #a28362;               /* TOOL red highlight */
     primary: #dbd4db;          /* main foreground */
     ug: #3a3a3d;               /* muted dark accent */
     background-color: @bg;
     border: 0px;
-    kl: #531850;               
+    kl: #a28362;               
     black: #000000;
     transparent: #ffff00;
 }

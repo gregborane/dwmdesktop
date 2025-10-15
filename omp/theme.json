@@ -13,7 +13,7 @@
             "home_enabled": true
           },
           "template": "\ue235 {{ if .Venv }}({{ .Venv }}){{ end }} ",
-          "foreground": "#c0caf5",
+          "foreground": "#a9a480",
           "type": "python",
           "style": "powerline"
         },
@@ -22,7 +22,7 @@
             "cache_duration": "none"
           },
           "template": "\ueb99 {{ .UserName }} on",
-          "foreground": "#c0caf5",
+          "foreground": "#cbb9a0",
           "type": "session",
           "style": "plain"
         },
@@ -33,7 +33,7 @@
             "style": "full"
           },
           "template": " \uf07b {{ .Path }} ",
-          "foreground": "#7dcfff",
+          "foreground": "#7a92a6",
           "type": "path",
           "style": "plain"
         },
@@ -44,7 +44,7 @@
             "fetch_upstream_icon": true
           },
           "template": "{{ .UpstreamIcon }}{{ .HEAD }}{{ if gt .StashCount 0 }} \ueb4b {{ .StashCount }}{{ end }} ",
-          "foreground": "#73daca",
+          "foreground": "#8f8e74",
           "powerline_symbol": "\ue0b0",
           "type": "git",
           "style": "plain"
@@ -60,7 +60,7 @@
             "cache_duration": "none"
           },
           "template": "\ue3bf ",
-          "foreground": "#e0af68",
+          "foreground": "#d2b67f",
           "type": "root",
           "style": "plain"
         },
@@ -69,7 +69,7 @@
             "cache_duration": "none"
           },
           "template": "C[C@@H](CC1=CC=CC=C1)NC : ",
-          "foreground": "#f7768e",
+          "foreground": "#c27b55",
           "type": "text",
           "style": "plain"
         }
@@ -77,5 +77,10 @@
       "newline": true
     }
   ],
-  "version": 3
+  "final_space": true,
+  "version": 3,
+  "console_title": true,
+  "background": "#0d0a07",
+  "foreground": "#cbb9a0"
 }
+
