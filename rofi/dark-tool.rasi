@@ -5,14 +5,14 @@
 
 * {
     bg: #0a0805;               /* deep dark grey background */
-    hv: #a28362;               /* TOOL red highlight */
-    primary: #dbd4db;          /* main foreground */
+    hv: #f3dfba;               /* TOOL red highlight */
+    primary: #d4cbbb;          /* main foreground */
     ug: #3a3a3d;               /* muted dark accent */
     background-color: @bg;
     border: 0px;
-    kl: #a28362;               
+    kl: #f3dfba;               
     black: #000000;
-    transparent: #ffff00;
+    transparent: #0a0805;
 }
 
 /* Window */

@@ -13,7 +13,7 @@
             "home_enabled": true
           },
           "template": "\ue235 {{ if .Venv }}({{ .Venv }}){{ end }} ",
-          "foreground": "#a9a480",
+          "foreground": "#E4E4E4",
           "type": "python",
           "style": "powerline"
         },
@@ -22,7 +22,7 @@
             "cache_duration": "none"
           },
           "template": "\ueb99 {{ .UserName }} on",
-          "foreground": "#cbb9a0",
+          "foreground": "#E4E4E4",
           "type": "session",
           "style": "plain"
         },
@@ -33,7 +33,7 @@
             "style": "full"
           },
           "template": " \uf07b {{ .Path }} ",
-          "foreground": "#7a92a6",
+          "foreground": "#96A6C8",
           "type": "path",
           "style": "plain"
         },
@@ -60,7 +60,7 @@
             "cache_duration": "none"
           },
           "template": "\ue3bf ",
-          "foreground": "#d2b67f",
+          "foreground": "#FF4F58",
           "type": "root",
           "style": "plain"
         },
@@ -69,7 +69,7 @@
             "cache_duration": "none"
           },
           "template": "C[C@@H](CC1=CC=CC=C1)NC : ",
-          "foreground": "#c27b55",
+          "foreground": "#FF4F58",
           "type": "text",
           "style": "plain"
         }
@@ -80,7 +80,7 @@
   "final_space": true,
   "version": 3,
   "console_title": true,
-  "background": "#0d0a07",
-  "foreground": "#cbb9a0"
+  "background": "#181818",
+  "foreground": "#E4E4E4"
 }
 
